@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from django.core.urlresolvers import reverse
 from django.urls import resolve
 from django.test import TestCase
-from .views import signup
+from ..views import signup
+from ..forms import SignUpForm
 
 
 # Create your tests here.
@@ -24,12 +24,13 @@ class SignUpTests(TestCase):
 
     def test_contains_form(self):
         form = self.response.context.get('form')
-        self.assertIsInstance(form, UserCreationForm)
+        self.assertIsInstance(form, SignUpForm)
 class SuccessfulSignUpTests(TestCase):
     def setUp(self):
         url = reverse('signup')
         data = {
             'username': 'john',
+            'email':'john@doe.com',
             'password1': 'abcdef123456',
             'password2': 'abcdef123456'
         }
@@ -54,3 +55,21 @@ class SuccessfulSignUpTests(TestCase):
         response = self.client.get(self.home_url)
         user = response.context.get('user')
         self.assertTrue(user.is_authenticated)
+
+class InvalidSignUpTests(TestCase):
+    def setUp(self):
+        url = reverse('signup')
+        self.response = self.client.post(url, {})  # submit an empty dictionary
+
+    def test_signup_status_code(self):
+        '''
+        An invalid form submission should return to the same page
+        '''
+        self.assertEquals(self.response.status_code, 200)
+
+    def test_form_errors(self):
+        form = self.response.context.get('form')
+        self.assertTrue(form.errors)
+
+    def test_dont_create_user(self):
+        self.assertFalse(User.objects.exists())
