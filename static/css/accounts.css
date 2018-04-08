@@ -1,9 +1,9 @@
-/* body {
-   background-image: url(../img/darkness.png);
+body {
+   background-image: url(../img/grey_sandbag_@2X.png);
 
-} */
+}
 
-.logo a{
+.logo {
   font-family: 'Peralta',cursive;
 }
 
