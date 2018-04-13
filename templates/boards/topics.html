@@ -16,7 +16,7 @@
     <a href="{% url 'new_topic' board.pk %}" class="btn btn-primary">New topic</a>
   </div>
 
-  <table class="table table-striped mb-4">
+  <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
         <th>Topic</th>
@@ -45,10 +45,10 @@
             </small>
           </td>
           <td><a href="{% url 'topic_posts' board.pk topic.pk %}">{{ topic.subject }}</a></td>
-          <td>{{ topic.starter.username }}</td>
-          <td>{{ topic.replies }}</td>
-          <td>{{ topic.views }}</td>
-          <td>{{ topic.last_updated }}</td>
+         <td class="align-middle">{{ topic.starter.username }}</td>
+         <td class="align-middle">{{ topic.replies }}</td>
+         <td class="align-middle">{{ topic.views }}</td>
+         <td class="align-middle">{{ topic.last_updated }}</td>
         </tr>
       {% endfor %}
     </tbody>

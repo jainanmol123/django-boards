@@ -48,7 +48,7 @@ class Topic(models.Model):
         return range(1, count + 1)
 
     def get_last_ten_post(self):
-        return self.posts.order_by('-created_at')[:10]    
+        return self.posts.order_by('-created_at')[:10]
 
 
 
@@ -61,7 +61,7 @@ class Post(models.Model):
     updated_by=models.ForeignKey(User,null=True,related_name='+')
 
     def get_message_as_markdown(self):
-        return mark_safe(markdown(self.message,safe_made='escape'))
+        return mark_safe(markdown(self.message,safe_mode='escape'))
 
 
     def __str__(self):
